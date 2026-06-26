@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/axios@0.24.0/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/qs@6.10.2/dist/qs.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  hello
+  <div>
+    <button onclick="addUserJim()">add user Jim(x-www-form-urlencoded)</button>
+  </div>
+  <div>
+    <button onclick="addUserAmy()">add user Amy(json)</button>
+  </div>
+  <div>
+    <button onclick="loadUsers()">load users</button>
+  </div>
+  <div>
+    <input type="file" id="fileInput" multiple onchange="uploadFile()">
+  </div>
+</body>
+<script>
+  async function loadUsers() {
+      const res = await axios.get('/user/list', {
+        // 参数通过 params 指定，axios 会做 url encode，不需要自己做
+        params: {
+          name: 'Jack',
+          age: 35
+        }
+      });
+      console.log(res);            
+  }
+  async function addUserJim() {
+    const res = await axios.post('/user', Qs.stringify({
+      name: 'Jim',
+      age: 25
+    }), {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    });
+    console.log(res);
+  }
+  async function addUserAmy() {
+    const res = await axios.post('/user', {
+      name: 'Amy',
+      age: 22
+    });
+    console.log(res);
+  }
+  async function uploadFile() {
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
+    const data = new FormData();
+    data.set('name', 'guang');
+    data.set('age', 35);
+    data.set('file1', fileInput.files[0]);
+    data.set('file2', fileInput.files[1]);
+    const res = await axios.post('/user/file', data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    console.log(res);
+  }
+</script>
+</html>
