@@ -3,8 +3,8 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 @Injectable()
 export class LogMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: () => void) {
-    console.log('before2', req.url);
+    console.log('----LogMiddleware---- before2');
     next();
-    console.log('after2');
+    console.log('----LogMiddleware---- after2');
   }
 }
