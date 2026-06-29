@@ -21,6 +21,6 @@ export class LoginGuard implements CanActivate {
       context.getHandler(),
       this.appService.getHello(),
     );
-    return true; // 如果返回 false，则请求不会继续往下执行。
+    return false; // 如果返回 false，则请求不会继续往下执行。
   }
 }
